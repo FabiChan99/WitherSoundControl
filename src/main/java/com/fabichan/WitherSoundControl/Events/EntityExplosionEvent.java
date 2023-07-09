@@ -11,7 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
 
-public class EntityExplosionEvent implements Listener{
+public class EntityExplosionEvent implements Listener {
 
     private final Main plugin;
 

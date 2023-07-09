@@ -8,13 +8,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.jetbrains.annotations.NotNull;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 
-public class WitherSoundControlCommandHandler implements CommandExecutor, TabExecutor{
+public class WitherSoundControlCommandHandler implements CommandExecutor, TabExecutor {
     private final Main plugin;
 
     public WitherSoundControlCommandHandler(Main plugin) {
@@ -40,17 +39,17 @@ public class WitherSoundControlCommandHandler implements CommandExecutor, TabExe
                 plugin.reloadConfig();
                 commandSender.sendMessage(ChatColor.GRAY + "WitherSoundControl" + ChatColor.DARK_GRAY + " => "
                         + ChatColor.RESET + "Reloaded Configuration");
-            }
-            else {
+            } else {
                 commandSender.sendMessage(ChatColor.GRAY + "WitherSoundControl" + ChatColor.DARK_GRAY + " => " + ChatColor.RESET
                         + "No Permissions");
             }
         }
         return true;
     }
+
     @Override
     public List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command,
-                                      @NotNull String string, @NotNull String [] args) {
+                                      @NotNull String string, @NotNull String[] args) {
         if (commandSender.hasPermission("wsc.reload")) {
             return Collections.singletonList("reload");
         }
