@@ -1,0 +1,21 @@
+name: WitherSoundControl
+version: 1.0
+main: com.fabichan.WitherSoundControl.Main
+author: Fabi-Chan
+description: Control Wither spawn sound
+api-version: '1.16'
+depend:
+  - ProtocolLib
+
+commands:
+  withersoundcontrol:
+    description: Plugin Info
+    default: true
+    usage: /withersoundcontrol
+    aliases:
+      - wsc
+
+permissions:
+  wsc.reload:
+    default: op
+    description: Reloads the configuration

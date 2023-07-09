@@ -1,0 +1,7 @@
+# WitherSoundControl Config
+
+# Enables the Plugin
+Enabled: true
+
+# Set the Soundrange in Blocks around the spawned Wither ## Only applicable when GlobalSound is set to false
+SoundRange: 32
