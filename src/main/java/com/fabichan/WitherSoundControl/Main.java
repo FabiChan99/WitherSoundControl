@@ -5,12 +5,17 @@ import com.fabichan.WitherSoundControl.Events.EntityExplosionEvent;
 import com.fabichan.WitherSoundControl.Events.WorldEventListener;
 import com.fabichan.WitherSoundControl.Metrics.Metrics;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
+
 
 public class Main extends JavaPlugin{
-
+    private static final String PLUGIN_VERSION = "1.1.0";
     private void EventRegistration() {
         getLogger().info("Registering Listener");
         new WorldEventListener(this);
@@ -41,13 +46,83 @@ public class Main extends JavaPlugin{
         getLogger().info("Hello Minecraft!");
     }
 
+    public boolean isConfigOutdated(FileConfiguration config) {
+        String configVersion = config.getString("Version");
+        return (configVersion == null || compareVersions(configVersion, PLUGIN_VERSION) < 0);
+    }
+
+    private int compareVersions(String version1, String version2) {
+        String[] v1Components = version1.split("\\.");
+        String[] v2Components = version2.split("\\.");
+
+        for (int i = 0; i < Math.max(v1Components.length, v2Components.length); i++) {
+            int v1 = (i < v1Components.length) ? Integer.parseInt(v1Components[i]) : 0;
+            int v2 = (i < v2Components.length) ? Integer.parseInt(v2Components[i]) : 0;
+
+            if (v1 < v2) {
+                return -1;
+            } else if (v1 > v2) {
+                return 1;
+            }
+        }
+
+        return 0;
+    }
+
+    private void UpdateConfig() {
+        File configFile = new File(getDataFolder(), "config.yml");
+        FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+
+        // Check if the configuration is outdated
+        if (isConfigOutdated(config)) {
+            getLogger().warning("Outdated configuration detected. Updating the configuration!");
+
+            // Delete the old configuration file
+            if (configFile.exists()) {
+                configFile.delete();
+            }
+
+            // Create a new configuration file
+            saveDefaultConfig();
+
+            // Set the new configuration values
+            int range = 32;
+            boolean enable = true;
+            String wsound = "ENTITY_WITHER_SPAWN";
+
+            try {
+                range = config.getInt("SoundRange");
+            } catch (Exception ignored) {
+            }
+            try {
+                enable = config.getBoolean("Enabled");
+            } catch (Exception ignored) {
+            }
+            try {
+                wsound = config.getString("SpawnSound");
+            } catch (Exception ignored) {
+            }
+
+            config.set("Version", PLUGIN_VERSION);
+            config.set("SoundRange", range);
+            config.set("Enabled", enable);
+            config.set("SpawnSound", wsound);
+
+            saveConfig();
+
+            getLogger().info("Configuration update finished. Continuing the boot process.");
+        }
+    }
+
+
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
+        UpdateConfig();
         getLogger().info("---------------------------------------");
         getLogger().info("Starting WitherSoundControl");
         getLogger().info("Author: Fabi-Chan");
-        getLogger().info("Version: 1.0");
+        getLogger().info("Version: "+ PLUGIN_VERSION);
         getLogger().info("---------------------------------------");
         EventRegistration();
         CommandRegistration();

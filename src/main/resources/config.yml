@@ -1,3 +1,7 @@
+# DO NOT CHANGE THIS
+Version: 1.1.0
+
+
 # WitherSoundControl Config
 
 # Enables the Plugin
@@ -5,3 +9,6 @@ Enabled: true
 
 # Set the Soundrange in Blocks around the spawned Wither ## Only applicable when GlobalSound is set to false
 SoundRange: 32
+
+#Adjust the Sound when a Wither is spawned -> Look here for sounds: https://gist.github.com/Andre601/1ab3b4fabd0010ae241156333491c379
+SpawnSound: ENTITY_WITHER_SPAWN

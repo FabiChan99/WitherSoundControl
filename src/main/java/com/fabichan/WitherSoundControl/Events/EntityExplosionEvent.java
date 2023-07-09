@@ -25,7 +25,7 @@ public class EntityExplosionEvent implements Listener {
             for (Player player : plugin.getServer().getOnlinePlayers()) {
                 if (event.getLocation().getWorld() == player.getWorld()) {
                     if (event.getEntity().getLocation().distance(player.getLocation()) <= plugin.getConfig().getInt("SoundRange")) {
-                        player.playSound(player.getLocation(), Sound.ENTITY_WITHER_SPAWN, 1F, 1F);
+                        player.playSound(player.getLocation(), Sound.valueOf(plugin.getConfig().getString("SpawnSound")), 1F, 1F);
                     }
                 }
             }
