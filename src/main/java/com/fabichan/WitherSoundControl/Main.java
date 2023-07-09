@@ -4,6 +4,7 @@ import com.fabichan.WitherSoundControl.Commands.WitherSoundControlCommandHandler
 import com.fabichan.WitherSoundControl.Events.EntityExplosionEvent;
 import com.fabichan.WitherSoundControl.Events.WorldEventListener;
 import com.fabichan.WitherSoundControl.Metrics.Metrics;
+import com.fabichan.WitherSoundControl.Update.Checker;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -114,6 +115,16 @@ public class Main extends JavaPlugin{
         }
     }
 
+    private void UpdateChecker() {
+        new Checker(this, 111105).getVersion(version -> {
+            if (this.getDescription().getVersion().equals(version)) {
+                getLogger().info("This is the latest Version");
+            } else {
+                getLogger().info("There is a new update available. New Version: "+ version + "  Grab it here: https://www.spigotmc.org/resources/withersoundcontrol.111105/");
+            }
+        });
+    }
+
 
     @Override
     public void onEnable() {
@@ -127,6 +138,7 @@ public class Main extends JavaPlugin{
         EventRegistration();
         CommandRegistration();
         bStatsInit();
+        UpdateChecker();
         getLogger().info("Startup completed");
     }
 
