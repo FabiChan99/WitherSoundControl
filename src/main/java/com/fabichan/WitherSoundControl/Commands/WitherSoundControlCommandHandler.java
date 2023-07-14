@@ -28,20 +28,20 @@ public class WitherSoundControlCommandHandler implements CommandExecutor, TabExe
 
 
             commandSender.sendMessage(ChatColor.GRAY + "/withersoundcontrol " + ChatColor.DARK_GRAY + "-"
-                    + ChatColor.RESET + " Plugin information");
+                    + ChatColor.RESET + " " + plugin.getMessage("plugininfo"));
             if (commandSender.hasPermission("wsc.reload")) {
-                commandSender.sendMessage(ChatColor.GRAY + "/withersoundcontrol reload " + ChatColor.DARK_GRAY + "-"
-                        + ChatColor.RESET + " Plugin reload");
+                commandSender.sendMessage(ChatColor.GRAY + "/withersoundcontrol reload"+ " " + ChatColor.DARK_GRAY + "-"
+                        + ChatColor.RESET + " "+plugin.getMessage("plugininforeload"));
             }
-            commandSender.sendMessage(ChatColor.DARK_GRAY + "Author: " + ChatColor.GRAY + "Fabi-Chan");
+            commandSender.sendMessage(ChatColor.DARK_GRAY + "Author:"+" " + ChatColor.GRAY + "Fabi-Chan");
         } else if (args[0].equals("reload")) {
             if (commandSender.hasPermission("wsc.reload")) {
                 plugin.reloadConfig();
                 commandSender.sendMessage(ChatColor.GRAY + "WitherSoundControl" + ChatColor.DARK_GRAY + " => "
-                        + ChatColor.RESET + "Reloaded Configuration");
+                        + ChatColor.RESET + plugin.getMessage("pluginreload"));
             } else {
                 commandSender.sendMessage(ChatColor.GRAY + "WitherSoundControl" + ChatColor.DARK_GRAY + " => " + ChatColor.RESET
-                        + "No Permissions");
+                        + plugin.getMessage("nopermissions"));
             }
         }
         return true;

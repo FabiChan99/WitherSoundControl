@@ -1,5 +1,5 @@
 # DO NOT CHANGE THIS
-Version: 1.1.0
+Version: 1.2.0
 
 
 # WitherSoundControl Config
@@ -12,3 +12,6 @@ SoundRange: 32
 
 #Adjust the Sound when a Wither is spawned -> Look here for sounds: https://gist.github.com/Andre601/1ab3b4fabd0010ae241156333491c379
 SpawnSound: ENTITY_WITHER_SPAWN
+
+# Changes the plugin language. current languages: german, english, korean
+language: english

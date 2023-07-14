@@ -16,7 +16,8 @@ import java.io.IOException;
 
 
 public class Main extends JavaPlugin{
-    private static final String PLUGIN_VERSION = "1.1.0";
+    private static final String PLUGIN_VERSION = "1.2.0";
+    public FileConfiguration languageFile;
     private void EventRegistration() {
         getLogger().info("Registering Listener");
         new WorldEventListener(this);
@@ -125,11 +126,32 @@ public class Main extends JavaPlugin{
         });
     }
 
+    private void deployLanguagefiles() {
+        File configFile = new File(getDataFolder(), "messages.yml");
+        FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+        if (!configFile.exists()){
+            saveResource("messages.yml", false);
+        }
+        if (isConfigOutdated(config)){
+            if (configFile.exists()) {
+                configFile.delete();
+                saveResource("messages.yml", false);
+
+            }
+        }
+    }
+
+    private void loadLanguagefile() {
+        File languageFile = new File(getDataFolder(), "messages.yml");
+        this.languageFile = YamlConfiguration.loadConfiguration(languageFile);
+    }
+
 
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
         UpdateConfig();
+        deployLanguagefiles();
         getLogger().info("---------------------------------------");
         getLogger().info("Starting WitherSoundControl");
         getLogger().info("Author: Fabi-Chan");
@@ -139,8 +161,15 @@ public class Main extends JavaPlugin{
         CommandRegistration();
         bStatsInit();
         UpdateChecker();
+        loadLanguagefile();
         getLogger().info("Startup completed");
     }
+
+    public String getMessage(String key) {
+        String language = getConfig().getString("language");
+        return languageFile.getString("messages." + language + "." + key);
+    }
+
 
     @Override
     public void onDisable() {
